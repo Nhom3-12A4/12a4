@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thư viện • 12A4</title>
+      <link rel="stylesheet" href="thuvien.css">  
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="nav">
+      <div style="display:flex;align-items:center;gap:10px;font-weight:800">
+        <span class="badge">🖼 12A4</span><span>Thư viện</span>
+      </div>
+      <nav class="navlinks">
+        <a href="index.html">Trang chủ</a>
+        <a href="kiniem.html">Kỉ niệm</a>
+        <a class="active" href="thuvien.html">Thư viện</a>
+        <a href="thanhvien.html">Thành viên</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container" style="padding:18px 0 0;">
+  <div class="panel">
+    <div class="inner">
+      <h1>🖼️ Thư viện ảnh</h1>
+      <div class="sep"></div>
+
+      <div class="gallery">
+        <div class="ph has-img"><img src="thuvien/1.jpg" alt="1"></div>
+        <div class="ph has-img"><img src="thuvien/2.jpg" alt="2"></div>
+        <div class="ph has-img"><img src="thuvien/3.jpg" alt="3"></div>
+        <div class="ph has-img"><img src="thuvien/4.jpg" alt="4"></div>
+        <div class="ph has-img"><img src="thuvien/5.jpg" alt="5"></div>
+        <div class="ph has-img"><img src="thuvien/6.jpg" alt="6"></div>
+        <div class="ph has-img"><img src="thuvien/7.jpg" alt="7"></div>
+        <div class="ph has-img"><img src="thuvien/8.jpg" alt="8"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="sep"></div>
+    <div>© 2026 • 12A4 — Made with ❤️ Mọi bản quyền liên hệ ZALO:0353070308</div>
+  </footer>
+</main>
+
+<audio id="bgm" loop preload="auto">
+  <source src="nhacthuvien.MP3" type="audio/mpeg">
+</audio>
+<script>
+(() => {
+  const bgm = document.getElementById("bgm");
+  if (!bgm) return;
+  bgm.volume = 0.28;
+  const tryPlay = async () => { try { await bgm.play(); } catch(e) {} };
+  const unlock = () => tryPlay();
+  document.addEventListener("pointerdown", unlock, { once:true });
+  document.addEventListener("touchstart", unlock, { once:true });
+  document.addEventListener("keydown", unlock, { once:true });
+})();
+function closeWelcome(){
+  document.getElementById("welcomePopup").style.display = "none";
+}
+</script>
+<div class="back-home">
+  <a href="index.html" class="back-btn">⬅️ Về trang chủ</a>
+</div>
+<div class="welcome-popup" id="welcomePopup">
+  <div class="popup-box">
+    <h2>🎉 Chào mừng bạn đến với thư viện 12A4!</h2>
+    <p>Chúc bạn xem vui vẻ nhé 💖</p>
+    <button onclick="closeWelcome()">Đóng</button>
+  </div>
+</div>
+</body>
+</html>

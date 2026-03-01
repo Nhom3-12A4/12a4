@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12A4 • Một thời thanh xuân</title>
+ <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="player" id="player">
+  <div class="p-left">
+    <div class="p-title" id="pTitle">🎵 Đang tải...</div>
+    <div class="p-time">
+      <span id="curTime">0:00</span>
+      <input id="seek" type="range" min="0" max="100" value="0">
+      <span id="durTime">0:00</span>
+    </div>
+  </div>
+
+  <div class="p-mid">
+    <button class="p-btn" id="prevBtn" title="Bài trước">⏮</button>
+    <button class="p-btn p-main" id="playBtn" title="Phát/Tạm dừng">▶</button>
+    <button class="p-btn" id="nextBtn" title="Bài tiếp">⏭</button>
+  </div>
+
+  <div class="p-right">
+    <span class="p-vol-ico">🔊</span>
+    <input id="vol" type="range" min="0" max="1" step="0.01" value="0.28">
+  </div>
+</div>
+<audio id="bgm" preload="auto"></audio>
+<header>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <span class="badge">✨ 12A4</span>
+        <span>Một thời thanh xuân</span>
+      </div>
+      <nav class="navlinks">
+        <a class="active" href="index.html">Trang chủ</a>
+        <a href="kiniem.html">Kỉ niệm</a>
+        <a href="thuvien.html">Thư viện</a>
+        <a href="thanhvien.html">Thành viên</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="heroBox">
+      <h1>✨ 12A4 – Một thời thanh xuân</h1>
+      <p>Niên khóa 2025–2026 • Nơi chúng ta cùng cười, cùng học, cùng trưởng thành.</p>
+      <div class="heroBtns">
+        <a class="btn btn1" href="kiniem.html">📚 Xem kỉ niệm</a>
+        <a class="btn btn2" href="thuvien.html">🖼️ Thư viện</a>
+        <a class="btn btn3" href="thanhvien.html">👥 Thành viên</a>
+      </div>
+      <div class="small" style="margin-top:14px;">Có thể bạn chưa biết: nhấn vào nơi bất kì sẽ có nhạc.</div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <section class="grid3" style="padding-bottom:14px;">
+    <div class="card">
+      <h3>📚 Kỉ niệm</h3>
+      <div class="muted">Các mốc đáng nhớ, hoạt động, câu chuyện “hồi đó”.</div>
+      <div style="margin-top:12px"><a class="btn" href="kiniem.html">Đi tới</a></div>
+    </div>
+    <div class="card">
+      <h3>🖼️ Thư viện</h3>
+      <div class="muted">Ảnh lớp, ảnh sự kiện, ảnh “dìm”.</div>
+      <div style="margin-top:12px"><a class="btn" href="thuvien.html">Đi tới</a></div>
+    </div>
+    <div class="card">
+      <h3>👥 Thành viên</h3>
+      <div class="muted">Danh sách thành viên + vai trò (lớp trưởng, tổ, ban…).</div>
+      <div style="margin-top:12px"><a class="btn" href="thanhvien.html">Đi tới</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="sep"></div>
+    <div>© 2026 • 12A4 — Made with ❤️ Mọi bản quyền liên hệ ZALO:0353070308</div>
+    <div class="small">Bản quyền thuộc về 3KL vui lòng không copy dưới mọi hình thức.</div>
+  </footer>
+</main>
+
+<audio id="bgm" loop preload="auto">
+  <source src="assets/bgm.mp3" type="audio/mpeg">
+</audio>
+<!-- Nút nhỏ bên phải -->
+<div class="puz-launcher">
+  <div class="puz-badge">Mini game</div>
+  <div class="puz-chip" id="puzOpen" title="Mở game xếp hình">🧩</div>
+</div>
+
+<!-- Popup game -->
+<div class="puz-modal" id="puzModal">
+  <div class="puz-box" role="dialog" aria-modal="true" aria-label="Game xếp hình">
+    <div class="puz-head">
+      <div>
+        <div class="puz-title">🧩 Xếp hình ảnh lớp 4×4 (kéo thả)</div>
+        <div class="puz-meta" id="puzMeta">Đang chuẩn bị…</div>
+      </div>
+      <div class="puz-actions">
+        <button class="puz-btn" id="puzShuffle">Trộn</button>
+        <button class="puz-btn" id="puzReset">Làm lại</button>
+        <button class="puz-close" id="puzClose" title="Đóng">✕</button>
+      </div>
+    </div>
+
+    <div class="puz-body">
+      <div class="puz-board" id="puzBoard"></div>
+
+      <div class="puz-side">
+        <div class="puz-tray" id="puzTray"></div>
+        <div class="puz-win" id="puzWin">🎉 Chuẩn! Bạn đã ghép xong!</div>
+
+        <div class="puz-preview">
+          <img src="puzzle.jpg" alt="Ảnh gốc tham khảo">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+  const bgm = document.getElementById("bgm");
+  if (!bgm) return;
+  bgm.volume = 0.28;
+
+  const tryPlay = async () => { try { await bgm.play(); } catch(e) {} };
+  const unlock = () => tryPlay();
+
+  document.addEventListener("pointerdown", unlock, { once:true });
+  document.addEventListener("touchstart", unlock, { once:true });
+  document.addEventListener("keydown", unlock, { once:true });
+})();
+(() => {
+  const audio = document.getElementById("bgm");
+  const playBtn = document.getElementById("playBtn");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const seek = document.getElementById("seek");
+  const vol = document.getElementById("vol");
+  const pTitle = document.getElementById("pTitle");
+  const curTime = document.getElementById("curTime");
+  const durTime = document.getElementById("durTime");
+
+  // ✅ Danh sách bài (đổi tên file theo m)
+  const playlist = [
+    { title: "Hành Lang Cũ", src: "hanhlangcu.MP3" },
+    { title: "Như Ngày Hôm Qua", src: "nhungayhomqua.mp3" },
+    { title: "Nụ Cười 18 20", src: "nucuoi1820.mp3" },
+  ];
+
+  // nhớ bài & thời gian nếu muốn (optional)
+  let idx = Number(localStorage.getItem("songIndex") || 0);
+  idx = (idx + playlist.length) % playlist.length;
+
+  const fmt = (s) => {
+    s = Math.floor(s || 0);
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return `${m}:${String(r).padStart(2, "0")}`;
+  };
+
+  const loadSong = (i, keepTime = false) => {
+    const wasTime = audio.currentTime;
+    idx = (i + playlist.length) % playlist.length;
+    localStorage.setItem("songIndex", String(idx));
+
+    audio.src = playlist[idx].src;
+    pTitle.textContent = `🎵 ${playlist[idx].title}`;
+    seek.value = 0;
+    curTime.textContent = "0:00";
+    durTime.textContent = "0:00";
+
+    audio.onloadedmetadata = () => {
+      durTime.textContent = fmt(audio.duration);
+      if (keepTime) audio.currentTime = Math.min(wasTime, audio.duration || wasTime);
+    };
+  };
+
+  const setPlayIcon = () => {
+    playBtn.textContent = audio.paused ? "▶" : "⏸";
+  };
+
+  const tryPlay = async () => {
+    try { await audio.play(); } catch (e) {}
+    setPlayIcon();
+  };
+
+  // init
+  audio.volume = Number(localStorage.getItem("vol") || 0.28);
+  vol.value = String(audio.volume);
+  loadSong(idx);
+
+  // auto-unlock (tránh bị chặn autoplay)
+  const unlock = () => tryPlay();
+  document.addEventListener("pointerdown", unlock, { once: true });
+  document.addEventListener("touchstart", unlock, { once: true });
+  document.addEventListener("keydown", unlock, { once: true });
+
+  // Play/Pause
+  playBtn.addEventListener("click", () => {
+    if (audio.paused) tryPlay();
+    else { audio.pause(); setPlayIcon(); }
+  });
+
+  // Next/Prev
+  nextBtn.addEventListener("click", () => { loadSong(idx + 1); tryPlay(); });
+  prevBtn.addEventListener("click", () => { loadSong(idx - 1); tryPlay(); });
+
+  // Khi bài kết thúc -> tự next
+  audio.addEventListener("ended", () => {
+    loadSong(idx + 1);
+    tryPlay();
+  });
+
+  // Update seek theo thời gian
+  audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+    const p = (audio.currentTime / audio.duration) * 100;
+    seek.value = String(p);
+    curTime.textContent = fmt(audio.currentTime);
+  });
+
+  // Tua
+  let seeking = false;
+  seek.addEventListener("input", () => { seeking = true; });
+  seek.addEventListener("change", () => {
+    if (!audio.duration) return;
+    const p = Number(seek.value) / 100;
+    audio.currentTime = p * audio.duration;
+    seeking = false;
+  });
+
+  // Volume
+  vol.addEventListener("input", () => {
+    audio.volume = Number(vol.value);
+    localStorage.setItem("vol", String(audio.volume));
+  });
+
+  // đồng bộ icon
+  audio.addEventListener("play", setPlayIcon);
+  audio.addEventListener("pause", setPlayIcon);
+})();
+function closeWelcome(){
+  document.getElementById("welcomePopup").style.display = "none";
+}
+(() => {
+  const IMG = "puzzle.jpg"; // đổi nếu ảnh bạn nằm thư mục khác
+  const N = 4;
+
+  const openBtn = document.getElementById("puzOpen");
+  const modal   = document.getElementById("puzModal");
+  const closeBtn= document.getElementById("puzClose");
+  const board   = document.getElementById("puzBoard");
+  const tray    = document.getElementById("puzTray");
+  const meta    = document.getElementById("puzMeta");
+  const winEl   = document.getElementById("puzWin");
+  const btnShuffle = document.getElementById("puzShuffle");
+  const btnReset   = document.getElementById("puzReset");
+
+  let placed = Array(N*N).fill(null);
+  let moves = 0;
+  let ready = false;
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  function buildBoard(){
+    board.style.gridTemplateColumns = `repeat(${N}, 1fr)`;
+    board.innerHTML = "";
+    for(let i=0;i<N*N;i++){
+      const cell = document.createElement("div");
+      cell.className = "puz-cell";
+      cell.dataset.cell = String(i);
+
+      cell.addEventListener("dragover", (e)=>e.preventDefault());
+      cell.addEventListener("drop", (e)=>{
+        e.preventDefault();
+        const pieceId = e.dataTransfer.getData("text/piece");
+        if(!pieceId) return;
+        placePiece(i, Number(pieceId));
+      });
+
+      // mobile tap-to-place (optional)
+      cell.addEventListener("click", ()=>{
+        const selected = document.querySelector(".puz-piece[data-selected='1']");
+        if(selected) placePiece(i, Number(selected.dataset.piece));
+      });
+
+      board.appendChild(cell);
+    }
+  }
+
+  function createPiece(pieceIndex){
+  const piece = document.createElement("div");
+  piece.className = "puz-piece";
+  piece.draggable = true;
+  piece.dataset.piece = String(pieceIndex);
+
+  const r = Math.floor(pieceIndex / N);
+  const c = pieceIndex % N;
+
+  piece.style.backgroundImage = `url('${IMG}')`;
+  piece.style.backgroundSize = `${N * 100}% ${N * 100}%`;
+  piece.style.backgroundPosition = `${(c * 100) / (N - 1)}% ${(r * 100) / (N - 1)}%`;
+  piece.style.backgroundRepeat = "no-repeat";
+
+  piece.addEventListener("dragstart", (e)=>{
+    e.dataTransfer.setData("text/piece", String(pieceIndex));
+  });
+
+  piece.addEventListener("click", ()=>{
+    const cur = piece.dataset.selected === "1";
+    document.querySelectorAll(".puz-piece").forEach(p=>p.dataset.selected="0");
+    piece.dataset.selected = cur ? "0" : "1";
+  });
+
+  return piece;
+}
+
+  function buildTray(shuffled=true){
+    tray.innerHTML = "";
+    const arr = [...Array(N*N).keys()];
+    if(shuffled) shuffle(arr);
+    arr.forEach(i => tray.appendChild(createPiece(i)));
+  }
+
+  function updateMeta(){
+    const done = placed.filter(x=>x !== null).length;
+    meta.textContent = `Đã đặt: ${done}/${N*N} • Lượt: ${moves}`;
+  }
+
+  function updateCellStatus(cellIndex){
+    const cell = board.querySelector(`.puz-cell[data-cell='${cellIndex}']`);
+    if(!cell) return;
+    const pieceIndex = placed[cellIndex];
+    if(pieceIndex === cellIndex) cell.classList.add("ok");
+    else cell.classList.remove("ok");
+  }
+
+  function checkWin(){
+    const ok = placed.every((p,i)=>p === i);
+    winEl.style.display = ok ? "block" : "none";
+  }
+
+  function placePiece(cellIndex, pieceIndex){
+    const piece = document.querySelector(`.puz-piece[data-piece='${pieceIndex}']`);
+    if(!piece) return;
+
+    // if target has piece -> return that piece to tray
+    const existing = placed[cellIndex];
+    if(existing !== null){
+      const ex = document.querySelector(`.puz-piece[data-piece='${existing}']`);
+      if(ex) tray.appendChild(ex);
+      placed[cellIndex] = null;
+      const cell = board.querySelector(`.puz-cell[data-cell='${cellIndex}']`);
+      if(cell){ cell.innerHTML = ""; cell.classList.remove("ok"); }
+    }
+
+    // if this piece was in another cell -> clear it
+    const prevCell = placed.indexOf(pieceIndex);
+    if(prevCell !== -1){
+      placed[prevCell] = null;
+      const prev = board.querySelector(`.puz-cell[data-cell='${prevCell}']`);
+      if(prev){ prev.innerHTML = ""; prev.classList.remove("ok"); }
+    }
+
+    // place into cell
+    const target = board.querySelector(`.puz-cell[data-cell='${cellIndex}']`);
+    target.innerHTML = "";
+    target.appendChild(piece);
+    placed[cellIndex] = pieceIndex;
+    piece.dataset.selected = "0";
+
+    moves++;
+    updateMeta();
+    updateCellStatus(cellIndex);
+    checkWin();
+  }
+
+  function resetAll(shufflePieces=true){
+    placed = Array(N*N).fill(null);
+    moves = 0;
+    winEl.style.display = "none";
+    board.querySelectorAll(".puz-cell").forEach(c=>{
+      c.innerHTML = "";
+      c.classList.remove("ok");
+    });
+    buildTray(shufflePieces);
+    updateMeta();
+  }
+
+  // modal open/close
+  function openModal(){
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+    if(ready) updateMeta();
+  }
+  function closeModal(){
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
+  window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
+
+  btnShuffle.addEventListener("click", ()=> resetAll(true));
+  btnReset.addEventListener("click", ()=> resetAll(false));
+
+  // init after image loads
+  buildBoard();
+  const img = new Image();
+  img.onload = () => { ready = true; resetAll(true); };
+  img.onerror = () => { meta.textContent = "Không tìm thấy puzzle.jpg (đặt ảnh đúng tên)"; ready = true; resetAll(true); };
+  img.src = IMG;
+})();
+</script>
+<div class="corner-logos">
+  <div class="logoWrap">
+    <img src="logonhom.png" alt="Logo nhóm">
+  </div>
+  <div class="logoWrap">
+    <img src="logolop.png" alt="Logo lớp">
+  </div>
+</div>
+<div class="welcome-popup" id="welcomePopup">
+  <div class="popup-box">
+    <h2>🎉 Chào mừng bạn đến với website 12A4!</h2>
+    <p>Chúc bạn xem vui vẻ nhé 💖</p>
+    <button onclick="closeWelcome()">Đóng</button>
+  </div>
+</div>
+</body>
+</html>

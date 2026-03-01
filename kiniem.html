@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kỉ niệm • 12A4</title>
+  <link rel="stylesheet" href="kiniem.css">  
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="nav">
+      <div style="display:flex;align-items:center;gap:10px;font-weight:800">
+        <span class="badge">📚 12A4</span><span>Kỉ niệm</span>
+      </div>
+      <nav class="navlinks">
+        <a href="index.html">Trang chủ</a>
+        <a class="active" href="kiniem.html">Kỉ niệm</a>
+        <a href="thuvien.html">Thư viện</a>
+        <a href="thanhvien.html">Thành viên</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container" style="padding:18px 0 0;">
+  <div class="panel">
+    <div class="inner">
+      <h1>📚 Những kỉ niệm đáng nhớ</h1>
+      <div class="muted">Bạn thay nội dung + ảnh theo đúng lớp mình nha.</div>
+      <div class="sep"></div>
+
+      <div class="timeline">
+        <div class="item">
+          <div class="row">
+            <div class="pic"><img src="thuvien/a1.jpg" alt="k1"></div>
+            <div class="content">
+              <div class="tag">🎉 Sự kiện</div>
+              <h3 style="margin:10px 0 6px;">Ngày đầu vào lớp 12</h3>
+              <div class="muted">Ngày đầu của năm lớp 12 đến nhanh hơn tụi mình nghĩ. Không còn bỡ ngỡ vì đã quen nhau từ trước, nhưng ai cũng cảm nhận rõ đây là năm cuối cùng ngồi chung một lớp. Vẫn là những câu nói đùa quen thuộc, những chỗ ngồi quen thuộc, chỉ khác là trong lòng bắt đầu có chút áp lực và chút suy nghĩ về tương lai.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="row">
+            <div class="pic"><img src="thuvien/a2.jpg" alt="k2"></div>
+            <div class="content">
+              <div class="tag">🏫 Hoạt động</div>
+              <h3 style="margin:10px 0 6px;">Một buổi sinh hoạt “đỉnh cao”</h3>
+              <div class="muted">20/11 năm lớp 12 mang ý nghĩa khác hơn những năm trước. Không chỉ là tặng hoa hay gửi lời chúc, đó là dịp để cả lớp bày tỏ sự biết ơn thật sự sau nhiều năm được thầy cô dạy dỗ. Lớp mình đã tổ chức một buổi tiệc tri ân dành cho thầy cô, không quá cầu kỳ nhưng rất chỉn chu và chân thành. Khi thầy cô ngồi lại cùng lớp, lắng nghe những chia sẻ cuối cấp, không khí trở nên ấm áp và xúc động. Buổi tiệc đó đã trở thành một trong những kỉ niệm đáng nhớ nhất của năm cuối cấp</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="row">
+            <div class="pic"><img src="thuvien/a3.jpg" alt="k3"></div>
+            <div class="content">
+              <div class="tag">💐 20/11</div>
+              <h3 style="margin:10px 0 6px;">Tri ân thầy cô</h3>
+              <div class="muted">​Ngày đầu tiên của khối 12 không đơn thuần là sự khởi đầu của một năm học mới, mà là thời điểm đánh dấu bước ngoặt chuyển mình từ sự hồn nhiên sang ngưỡng cửa trưởng thành. Không khí trong những lớp học cuối cấp dường như đặc quánh hơn bởi sự giao thoa giữa nỗ lực và kỳ vọng. Những tà áo trắng trên sân trường không còn mang vẻ rộn ràng, tinh nghịch của những năm dưới, thay vào đó là một sự điềm tĩnh lạ kỳ. Ánh mắt của các nam sinh, nữ sinh lúc này không chỉ hướng về bảng đen, mà còn đau đáu nhìn về phía những cánh cửa đại học xa xôi. Từng trang sách mở ra trong ngày đầu tiên này đều mang theo sức nặng của những ước mơ và cả những đêm dài ôn luyện sắp tới. Đó là một khởi đầu vừa hối hả, vừa lưu luyến, nơi mỗi giây phút trôi qua đều được trân trọng như những mảnh ghép cuối cùng của bức tranh thanh xuân rực rỡ nhất.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="badge" href="index.html">⬅️ Về trang chủ</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="sep"></div>
+    <div>© 2026 • 12A4 — Made with ❤️ Mọi bản quyền liên hệ ZALO:0353070308</div>
+  </footer>
+</main>
+
+<audio id="bgm" loop preload="auto">
+  <source src="thaychua.mp3" type="audio/mpeg">
+</audio>
+<script>
+(() => {
+  const bgm = document.getElementById("bgm");
+  if (!bgm) return;
+  bgm.volume = 0.28;
+  const tryPlay = async () => { try { await bgm.play(); } catch(e) {} };
+  const unlock = () => tryPlay();
+  document.addEventListener("pointerdown", unlock, { once:true });
+  document.addEventListener("touchstart", unlock, { once:true });
+  document.addEventListener("keydown", unlock, { once:true });
+})();
+function closeWelcome(){
+  document.getElementById("welcomePopup").style.display = "none";
+}
+</script>
+<div class="welcome-popup" id="welcomePopup">
+  <div class="popup-box">
+    <h2>🎉 Chào mừng bạn đến với kỉ niệm 12A4!</h2>
+    <p>Chúc bạn xem vui vẻ nhé 💖</p>
+    <button onclick="closeWelcome()">Đóng</button>
+  </div>
+</div>
+</body>
+</html>
